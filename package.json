@@ -1,15 +1,20 @@
 {
-  "name": "h5-sdk",
+  "name": "hoo-sdk",
   "version": "0.1.0",
   "private": true,
+  "main": "dist/hoo.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "build:sdk": "vue-cli-service build --target lib --inline-vue --name hoo src/login.js"
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-i18n": "^8.26.5",
+    "vue-ripple-directive": "^2.0.1",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

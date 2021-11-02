@@ -1,0 +1,10 @@
+@import "./reset.scss";
+
+.text-ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.pointer {
+    cursor: pointer;
+}
