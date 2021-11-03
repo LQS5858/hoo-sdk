@@ -1,11 +1,58 @@
 <meta charset="utf-8">
 <title>login demo</title>
-<script src="./dist/hoo.umd.js"></script>
+<script src="./dist/hoo.umd.min.js"></script>
 
 <body>
     <div id="root"></div>
     <script>
-        new hoo({ width: '800', height: '1000', el: '#root' })
+        let instance = new hoo({
+            curStep: 1,
+            stepList: [
+                {
+                    step: 1,
+                    classId: '#root',
+                    title: '选择交易对',
+                    content: '选择或搜索您感兴趣的数字货币交易',
+                    nextText: '下一步',
+                    prevText: '跳过'
+                },
+                {
+                    step: 2,
+                    classId: '',
+                    title: '选择交易对2',
+                    content: '选择或搜索您感兴趣的数字货币交易2',
+                    nextText: '下一步',
+                    prevText: '跳过'
+                }
+            ]
+        }, () => { }, step => {
+        })
+
+        setTimeout(() => {
+            console.log('5s');
+            new hoo({
+                curStep: 1,
+                stepList: [
+                    {
+                        step: 1,
+                        classId: '',
+                        title: '选择交易对',
+                        content: '选择或搜索您感兴趣的数字货币交易',
+                        nextText: '下一步',
+                        prevText: '跳过'
+                    },
+                    {
+                        step: 2,
+                        classId: '',
+                        title: '选择交易对2',
+                        content: '选择或搜索您感兴趣的数字货币交易2',
+                        nextText: '下一步',
+                        prevText: '跳过'
+                    }
+                ]
+            })
+        }, 5000);
+
         console.log(hoo)
     </script>
 </body>

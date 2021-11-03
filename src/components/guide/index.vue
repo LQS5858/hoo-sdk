@@ -4,7 +4,7 @@
        :style=[guideStyle]>
     <div class="title">
       <div class="left">
-        <p class="step-label">{{curStep}}</p>
+        <p class="step-label">{{step}}</p>
         <p class="step-text">{{$$(activeStepObj,'title')}}</p>
       </div>
       <div @click.stop="closeHandler">
@@ -20,7 +20,7 @@
       <div class="left">
         <p v-for="(item,index) in totalStep"
            class="step-dot"
-           :id="item===curStep?'is-dot-active':''"
+           :id="item===step?'is-dot-active':''"
            :key="index"></p>
       </div>
       <div class="right">
@@ -35,26 +35,30 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 export default {
   name: 'guide',
   data () {
     return {
-      curStep: 1
+      step: 1
     }
   },
-  inject: ['stepList'],
+  inject: ['opts', 'closeCb'],
   computed: {
-    ...mapState({
-      opts: state => state.basic.opts || {}
-    }),
+    stepList () {
+      const { stepList } = this.opts || {}
+      return stepList || []
+    },
 
     totalStep () {
       return this.stepList?.length
     },
+    activeEl () {
+      const { classId } = this.activeStepObj || {}
+      return classId
+    },
     activeStepObj () {
-      console.log('active>>', this.stepList?.[this.curStep - 1]);
-      return this.stepList?.[this.curStep - 1]
+      console.log('active>>', this.stepList?.[this.step - 1]);
+      return this.stepList?.[this.step - 1]
     },
     guideStyle () {
       const { top = 50, left = 0, dotBorderColor = '#179971', dotBgColor = '#7a8793', width = 306, height = 122, bgColor = '#262D33', borderColor = '#179971' } = this.opts || {}
@@ -68,27 +72,33 @@ export default {
     }
   },
   methods: {
+    async removeCurDom () {
+
+    },
     closeHandler () {
       this.closeGuide()
     },
     closeGuide () {
-      const { closeCallback } = this.opts || {}
-      this.curStep = 1
-      closeCallback && closeCallback()
-      const dom = this.$refs['guideRef']
-      if (!dom) return
-      dom.style.display = 'none'
+      const closeCb = this.closeCb
+      const child = document.querySelector('#app')
+      if (!child) return
+      child.parentNode.removeChild(child)
+      console.log('closeCb--2', closeCb, this.closeCb);
+      closeCb && closeCb('已关闭')
     },
     nextHandler () {
-      if (this.curStep >= this.totalStep) {
-        this.closeGuide()
+      this.closeHandler()
+      if (this.step >= this.totalStep) {
+        this.step = 1
         return
       }
-      this.curStep += 1
+      this.step += 1
     }
   },
   mounted () {
-    console.log('reject>>>', this.stepList);
+    const { curStep } = this.opts || {}
+    this.step = curStep
+    console.log('reject>>>', this.opts, this.closeCb);
   }
 }
 </script>
