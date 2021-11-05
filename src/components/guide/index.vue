@@ -82,9 +82,10 @@ export default {
       const closeCb = this.closeCb
       const child = document.querySelector('#app')
       if (!child) return
+      child.parentNode.removeAttribute('style', '{}')
       child.parentNode.removeChild(child)
       console.log('closeCb--2', closeCb, this.closeCb);
-      closeCb && closeCb('已关闭')
+      closeCb && closeCb(this.step)
     },
     nextHandler () {
       this.closeHandler()

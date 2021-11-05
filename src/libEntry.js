@@ -44,6 +44,11 @@ export default class Guide {
             throw new Error('curStep和stepList为必传参数>>>')
         }
         const { classId } = stepList?.[curStep - 1] || {}
+        if (classId) {
+            const dom = document.querySelector(classId)
+            dom.style.position = 'relative'
+            dom.style.zIndex = '5555'
+        }
         const instance = new Vue({
             el: document.createElement("div"),
             render: h => h(App),

@@ -3,10 +3,11 @@
 <script src="./dist/hoo.umd.min.js"></script>
 
 <body>
-    <div id="root"></div>
+    <div id="root" style="height: 100px;width: 120px;background-color: green;"></div>
     <script>
-        let instance = new hoo({
+        let opts = {
             curStep: 1,
+            bottom: 0,
             stepList: [
                 {
                     step: 1,
@@ -25,33 +26,12 @@
                     prevText: '跳过'
                 }
             ]
-        }, () => { }, step => {
+        }
+        let instance = new hoo(opts, () => { }, step => {
+            console.log('步骤回调>>>>', step);
+            opts.curStep = step + 1
+            instance.renderDom(opts)
         })
-
-        setTimeout(() => {
-            console.log('5s');
-            new hoo({
-                curStep: 1,
-                stepList: [
-                    {
-                        step: 1,
-                        classId: '',
-                        title: '选择交易对',
-                        content: '选择或搜索您感兴趣的数字货币交易',
-                        nextText: '下一步',
-                        prevText: '跳过'
-                    },
-                    {
-                        step: 2,
-                        classId: '',
-                        title: '选择交易对2',
-                        content: '选择或搜索您感兴趣的数字货币交易2',
-                        nextText: '下一步',
-                        prevText: '跳过'
-                    }
-                ]
-            })
-        }, 5000);
 
         console.log(hoo)
     </script>
