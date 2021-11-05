@@ -1,24 +1,10 @@
-# h5-sdk
 
-## Project setup
-```
-npm install
-```
+# 新手引导SDK
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### 安装
 
-### Compiles and minifies for production
-```
-npm run build
-```
+#### cdn引入
 
-### Lints and fixes files
 ```
-npm run lint
+<script src=""></script>
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

@@ -1,7 +1,6 @@
 {
   "name": "hoo-sdk",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.1",
   "main": "dist/hoo.umd.min.js",
   "files": [
     "dist"
@@ -10,7 +9,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build:sdk": "vue-cli-service build --target lib --inline-vue --name hoo src/libEntry.js"
+    "build:sdk": "vue-cli-service build --target lib --inline-vue --name hoo src/libEntry.js",
+    "prepare": "vue-cli-service build --target lib --inline-vue --name hoo src/libEntry.js"
   },
   "dependencies": {
     "core-js": "^3.6.5",
