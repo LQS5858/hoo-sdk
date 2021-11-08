@@ -5,12 +5,30 @@
   "files": [
     "dist"
   ],
+  "keywords": [
+    "工具库",
+    "sdk",
+    "vue",
+    "lib",
+    "javascript",
+    "ui"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "build:sdk": "vue-cli-service build --target lib --inline-vue --name hoo src/libEntry.js",
     "prepare": "vue-cli-service build --target lib --inline-vue --name hoo src/libEntry.js"
+  },
+  "author": "lqs5858@163.com",
+  "unpkg": "dist/hoo.umd.min.js",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LQS5858/hoo-sdk"
+  },
+  "bugs": {
+    "url": "https://github.com/LQS5858/hoo-sdk/issues"
   },
   "dependencies": {
     "core-js": "^3.6.5",
