@@ -18,10 +18,12 @@ npm i --save hoo-sdk
 ### 使用
 
 #### 参数说明
-
-参数|例子|说明
-------｜------
-opts|{curStep:1,  //当前步数
+参数| 默认值 | 例子
+-------- | -----|----
+successCb|--|()=>{}
+closeCb|--|()=>{}
+opts  | -- | {
+    curStep:1,  //当前步数
     bottom:0, // 挂载dom距离父元素距离
     stepList: [
                 {
@@ -40,9 +42,8 @@ opts|{curStep:1,  //当前步数
                     nextText: '下一步',
                     prevText: '跳过'
                 }
-            ]}
-successCb|()=>{}|dom挂载成功的回调
-closeCb|()=>{}|下一步关闭的回调
+            ]
+  
 
 ```
 
