@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./selfVue.js"></script>
+</head>
+
+<body>
+    <h1 id="name">{{name}}</h1>
+    <script>
+        var ele = document.querySelector('#name')
+        var selfVue = new Vue({
+            name: 'hello world'
+        }, ele, 'name')
+        const id = window.setTimeout(function () {
+            console.log('name值改变了');
+            selfVue.name = 'canfoo';
+            clearTimeout(id)
+        }, 2000);
+        const id_ = setTimeout(() => {
+            console.log('name值改变了222');
+            selfVue.name = 'canfoo--222';
+            clearTimeout(id_)
+        }, 3000)
+    </script>
+</body>
+
+</html>
