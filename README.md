@@ -22,7 +22,9 @@ npm i --save hoo-sdk
 -------- | -----|----
 successCb|--|()=>{}
 closeCb|--|()=>{}
-opts  | -- | {
+opts  | -- | --
+```
+opts={
     curStep:1,  //当前步数
     bottom:0, // 挂载dom距离父元素距离
     stepList: [
@@ -42,7 +44,8 @@ opts  | -- | {
                     nextText: '下一步',
                     prevText: '跳过'
                 }
-            ]
+            ]}
+```
   
 
 ```
