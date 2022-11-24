@@ -7,7 +7,7 @@
         <p class="step-label">{{step}}</p>
         <p class="step-text">{{$$(activeStepObj,'title')}}</p>
       </div>
-      <div @click.stop="closeHandler">
+      <div @click.stop="closeGuide(true)">
         <img src="@/assets/images/close.png"
              class="close-icon pointer"
              alt="">
@@ -24,7 +24,7 @@
            :key="index"></p>
       </div>
       <div class="right">
-        <p @click.stop="closeHandler"
+        <p @click.stop="prevHandler"
            class="prev-text pointer  text-ellipsis">{{$$(activeStepObj,'prevText')}}</p>
         <div @click.stop="nextHandler"
              v-ripple
@@ -37,70 +37,93 @@
 <script>
 export default {
   name: 'guide',
-  data () {
-    return {
-      step: 1
-    }
+  data() {
+    return {}
   },
-  inject: ['opts', 'closeCb'],
+  inject: ['opts', 'completedCb', 'step', 'nextCb', 'prevCb', 'targetDom'],
   computed: {
-    stepList () {
+    stepList() {
       const { stepList } = this.opts || {}
       return stepList || []
     },
 
-    totalStep () {
+    totalStep() {
       return this.stepList?.length
     },
-    activeEl () {
+    activeEl() {
       const { classId } = this.activeStepObj || {}
       return classId
     },
-    activeStepObj () {
-      console.log('active>>', this.stepList?.[this.step - 1]);
+    activeStepObj() {
+      console.log('active>>', this.stepList?.[this.step - 1])
       return this.stepList?.[this.step - 1]
     },
-    guideStyle () {
-      const { top = 50, left = 0, dotBorderColor = '#179971', dotBgColor = '#7a8793', width = 306, height = 122, bgColor = '#262D33', borderColor = '#179971' } = this.opts || {}
+    guideStyle() {
+      const {
+        top = 50,
+        left = 0,
+        dotBorderColor = '#179971',
+        dotBgColor = '#7a8793',
+        width = 306,
+        height = 122,
+        bgColor = '#262D33',
+        borderColor = '#179971',
+      } = this.opts || {}
       return {
         '--bgColor': bgColor,
         '--dot-border-color': dotBorderColor,
         '--dot-bg-color': dotBgColor,
         '--border-color': borderColor,
-        '--top': `${top}px`, '--left': `${left}px`, '--width': `${width}px`, '--height': `${height}px`
+        '--top': `${top}px`,
+        '--left': `${left}px`,
+        '--width': `${width}px`,
+        '--height': `${height}px`,
       }
-    }
+    },
   },
   methods: {
-    async removeCurDom () {
-
-    },
-    closeHandler () {
+    prevHandler() {
       this.closeGuide()
-    },
-    closeGuide () {
-      const closeCb = this.closeCb
-      const child = document.querySelector('#app')
-      if (!child) return
-      child.parentNode.removeAttribute('style', '{}')
-      child.parentNode.removeChild(child)
-      console.log('closeCb--2', closeCb, this.closeCb);
-      closeCb && closeCb(this.step)
-    },
-    nextHandler () {
-      this.closeHandler()
-      if (this.step >= this.totalStep) {
-        this.step = 1
+      if (+this.step === 1) {
+        this.removeMask()
         return
       }
-      this.step += 1
-    }
+      this.prevCb(this.step)
+    },
+    async removeTargetAttributes() {
+      if (!this.targetDom) return
+      this.targetDom.removeAttribute('style')
+    },
+
+    closeGuide(isRemoveMask) {
+      this.removeTargetAttributes()
+      let curEl = this.$el
+      if (!curEl) return
+      curEl?.parentNode?.removeChild(curEl)
+      if (isRemoveMask) {
+        this.removeMask()
+      }
+    },
+    async removeMask() {
+      try {
+        let dom = document.querySelector('#ein-mask')
+        if (!dom) return
+        dom.parentNode.removeChild(dom)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    nextHandler() {
+      this.closeGuide()
+      if (+this.step >= +this.totalStep) {
+        this.completedCb(this.step)
+        this.removeMask()
+        return
+      }
+      this.nextCb(this.step)
+    },
   },
-  mounted () {
-    const { curStep } = this.opts || {}
-    this.step = curStep
-    console.log('reject>>>', this.opts, this.closeCb);
-  }
+  mounted() {},
 }
 </script>
 

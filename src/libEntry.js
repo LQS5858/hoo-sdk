@@ -19,14 +19,15 @@ Ripple.color = 'rgba(0, 0, 0, 0.2)'; //自定义水波纹颜色
 
 
 export default class Guide {
-    constructor(opts, successCb, closeCb) {
+    constructor(opts, nextCb, prevCb, completedCb) {
         this.opts = opts
-        this.successCb = successCb
-        this.closeCb = closeCb
+        this.nextCb = nextCb
+        this.prevCb = prevCb
+        this.targetDom = null
+        this.completedCb = completedCb
+        this.renderMask()
         if (!Guide.instance) {
             Guide.instance = this
-            this.renderMask()
-            this.renderDom()
         }
         return Guide.instance
     }
@@ -37,17 +38,34 @@ export default class Guide {
         })
         document.body.appendChild(instance.$el)
     }
-    renderDom () {
-        const { curStep = 1, stepList } = this?.opts || {}
+    sleep (duration) {
+        return new Promise((resolve) => {
+            let id = setTimeout(() => {
+                resolve()
+                id = clearTimeout(id)
+            }, duration);
+        })
+    }
+    async renderDom (curStep) {
+        const { stepList } = this?.opts || {}
         console.log('opts>>>2', this.opts);
         if (!curStep || !stepList || !stepList?.length) {
             throw new Error('curStep和stepList为必传参数>>>')
         }
         const { classId } = stepList?.[curStep - 1] || {}
         if (classId) {
-            const dom = document.querySelector(classId)
-            dom.style.position = 'relative'
-            dom.style.zIndex = '5555'
+            this.targetDom = document.querySelector(classId)
+            while (!this.targetDom) {
+                await this.sleep(1000)
+                this.targetDom = document.querySelector(classId)
+            }
+            try {
+                this.targetDom.style.position = 'relative'
+                this.targetDom.style.zIndex = '3000'
+            } catch (error) {
+                console.error(error);
+            }
+
         }
         const instance = new Vue({
             el: document.createElement("div"),
@@ -56,22 +74,21 @@ export default class Guide {
             provide: () => {
                 return {
                     opts: this.opts,
-                    closeCb: this.closeCb
+                    step: curStep,
+                    nextCb: this.nextCb,
+                    prevCb: this.prevCb,
+                    targetDom: this.targetDom,
+                    completedCb: this.completedCb
                 }
             }
         })
-        let dom
-        if (classId) {
-            dom = document.querySelector(classId)
-        } else {
-            dom = document.body
-        }
-        dom && dom.appendChild(instance.$el)
+
+        this.targetDom?.appendChild(instance.$el)
     }
-    static async init (opts, successCb, closeCb) {
+    static async init (opts, nextCb, completedCb) {
         console.log('init中opts', Guide.instance.opts);
         if (!this.instance) {
-            this.instance = new Guide(opts, successCb, closeCb)
+            this.instance = new Guide(opts, nextCb, completedCb)
         }
         return this.instance
     }

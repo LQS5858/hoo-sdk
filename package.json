@@ -1,7 +1,7 @@
 {
-  "name": "hoo-sdk",
-  "version": "1.0.2",
-  "main": "dist/hoo.umd.min.js",
+  "name": "guide-sdk",
+  "version": "2.0.0",
+  "main": "dist/guide.umd.min.js",
   "files": [
     "dist"
   ],
@@ -17,8 +17,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build:sdk": "vue-cli-service build --target lib --inline-vue --name hoo src/libEntry.js",
-    "prepare": "vue-cli-service build --target lib --inline-vue --name hoo src/libEntry.js"
+    "build:sdk": "vue-cli-service build --target lib --inline-vue --name guide src/libEntry.js",
+    "prepare": "vue-cli-service build --target lib --inline-vue --name guide src/libEntry.js"
   },
   "author": "lqs5858@163.com",
   "unpkg": "dist/hoo.umd.min.js",

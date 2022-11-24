@@ -1,20 +1,18 @@
 <template>
-  <div id="app">
+  <div id="h-sdk">
     <GuideStep />
   </div>
 </template>
 
 <script>
-
+import GuideStep from './components/guide'
 export default {
   name: 'App',
   components: {
-    GuideStep: () => import('./components/guide')
-  }
+    GuideStep,
+  },
 }
 </script>
 
-<style lang="scss">
-#app {
-}
+<style lang="scss" scoped>
 </style>
