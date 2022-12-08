@@ -1,5 +1,13 @@
 # 新手引导 SDK
 
+  <img src="https://img.shields.io/badge/node-12.x.x-green">
+  
+  <a href="https://npmcharts.com/compare/element-ui?minimal=true">
+    <img src="http://img.shields.io/npm/dm/element-ui.svg">
+  </a>
+  <br>
+
+
 ### 安装
 
 #### cdn 引入
