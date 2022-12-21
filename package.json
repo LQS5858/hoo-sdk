@@ -1,6 +1,6 @@
 {
   "name": "guide-sdk",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "dist/guide.umd.min.js",
   "files": [
     "dist"
@@ -10,6 +10,8 @@
     "sdk",
     "vue",
     "lib",
+    "新手引导",
+    "Beginner's guide",
     "javascript",
     "ui"
   ],
